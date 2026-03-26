@@ -6,7 +6,23 @@ const me = async (req, res) => {
 
 const updateMe = async (req, res) => {
   try {
-    const allowedFields = ["fullName", "phone", "bio"];
+    const allowedFields = [
+      "fullName",
+      "firstName",
+      "lastName",
+      "phone",
+      "bio",
+      "category",
+      "designation",
+      "profilePicture",
+      "instagram",
+      "facebook",
+      "snapchat",
+      "linkedin",
+      "area",
+      "website",
+      "businessName",
+    ];
     const updates = {};
 
     for (const key of allowedFields) {
@@ -18,6 +34,11 @@ const updateMe = async (req, res) => {
     const updated = await User.findByIdAndUpdate(req.user._id, updates, {
       new: true,
     }).select("-passwordHash");
+
+    if (updated) {
+      updated.fullName = `${updated.firstName} ${updated.lastName}`.trim();
+      await updated.save();
+    }
 
     return res.json({ message: "Profile updated", user: updated });
   } catch (error) {

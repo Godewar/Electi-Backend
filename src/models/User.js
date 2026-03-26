@@ -7,6 +7,16 @@ const userSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
+    firstName: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    lastName: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     email: {
       type: String,
       required: true,
@@ -24,6 +34,55 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     bio: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    category: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    designation: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    profilePicture: {
+      type: String,
+      default: "",
+    },
+    instagram: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    facebook: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    snapchat: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    linkedin: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    area: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    website: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    businessName: {
       type: String,
       default: "",
       trim: true,

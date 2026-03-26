@@ -5,15 +5,34 @@ const { signToken } = require("../utils/jwt");
 const sanitizeUser = (user) => ({
   id: user._id,
   fullName: user.fullName,
+  firstName: user.firstName,
+  lastName: user.lastName,
   email: user.email,
   phone: user.phone,
   bio: user.bio,
+  category: user.category,
+  designation: user.designation,
+  profilePicture: user.profilePicture,
+  instagram: user.instagram,
+  facebook: user.facebook,
+  snapchat: user.snapchat,
+  linkedin: user.linkedin,
+  area: user.area,
+  website: user.website,
+  businessName: user.businessName,
   createdAt: user.createdAt,
 });
 
 const register = async (req, res) => {
   try {
-    const { fullName = "", email, phone = "", password } = req.body;
+    const { 
+      fullName = "", 
+      firstName = "", 
+      lastName = "", 
+      email, 
+      phone = "", 
+      password 
+    } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required" });
@@ -26,8 +45,17 @@ const register = async (req, res) => {
     }
 
     const passwordHash = await bcrypt.hash(String(password), 10);
+    
+    // Auto-generate fullName if missing
+    let finalFullName = String(fullName).trim();
+    if (!finalFullName && (firstName || lastName)) {
+      finalFullName = `${firstName} ${lastName}`.trim();
+    }
+
     const user = await User.create({
-      fullName: String(fullName).trim(),
+      fullName: finalFullName,
+      firstName: String(firstName).trim(),
+      lastName: String(lastName).trim(),
       email: normalizedEmail,
       phone: String(phone).trim(),
       passwordHash,

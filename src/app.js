@@ -8,12 +8,14 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: true, // Allow any origin temporarily for debugging deployment
     credentials: true,
   })
 );
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use("/uploads", express.static("uploads"));
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
